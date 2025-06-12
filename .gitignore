@@ -1,0 +1,42 @@
+# Ignore build results
+bin/
+obj/
+
+# Ignore user-specific files
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Rider & VS Code (optional, just in case)
+.idea/
+.vscode/
+
+# Backup & temporary files
+*.bak
+*.tmp
+*.log
+
+# Ignore database files if generated during runtime or testing
+*.mdb
+*.sqlite
+
+# Ignore compiled DLLs (if accidentally placed in root)
+*.dll
+*.exe
+
+# Ignore test results
+TestResults/
+*.trx
+
+# Ignore ReSharper/JetBrains cache
+_ReSharper*/
+*.DotSettings.user
+
+# Ignore system files
+Thumbs.db
+.DS_Store
+
+# Optional: ignore whole packages folder (if using NuGet with restore-on-build)
+# packages/
