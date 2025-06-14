@@ -6,7 +6,6 @@ namespace Ex05.Logic
     {   
         public readonly int r_MaxUserGuesses;
         public int RemainingNumberOfGuesses { get; set; }
-
         public GuessCombination SecretWordCombination { get; private set; }
         public GuessCombination UserGuessCombination { get; set; }
         public GuessesHistory GuessesHistory { get; set; }

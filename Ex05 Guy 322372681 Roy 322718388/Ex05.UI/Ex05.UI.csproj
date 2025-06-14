@@ -51,6 +51,9 @@
     <Compile Include="ChancesSelectionForm.Designer.cs">
       <DependentUpon>ChancesSelectionForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="GuessRow.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="Program.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -8,7 +8,7 @@ namespace Ex05.Logic
 {
     public class SecretWordGenerator
     {
-        private const int k_SecretWordLength = 4;
+        public const int k_SecretWordLength = 4;
         private static readonly Random sr_RandomGenerator = new Random();
         // private static readonly char[] sr_CharsBank = getCharsBankFromEnum();
 

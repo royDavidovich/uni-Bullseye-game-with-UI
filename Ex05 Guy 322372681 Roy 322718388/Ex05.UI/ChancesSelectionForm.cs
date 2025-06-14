@@ -36,10 +36,5 @@ namespace Ex05.UI
             ClosedByStart = true;
             this.Close();
         }
-
-        private void ChancesSelectionForm_Load(object sender, EventArgs e)
-        {
-
-        }
     }
 }

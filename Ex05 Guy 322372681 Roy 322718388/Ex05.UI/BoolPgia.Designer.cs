@@ -1,7 +1,15 @@
-﻿namespace Ex05.UI
+﻿using System.Drawing;
+
+namespace Ex05.UI
 {
     partial class BoolPgia
     {
+        private const int k_RowHeight = 40;
+        private const int k_RowSpacing = 10;
+        private const int k_ExtraSpacingAfterSecret = 20;
+        private const int k_InitialTopMargin = 10;
+        private const int k_BottomMargin = 10;
+
         /// <summary>
         /// Required designer variable.
         /// </summary>
@@ -32,9 +40,21 @@
             // 
             // BoolPgia
             // 
+
+            int numberOfGuessRows = r_ChancesSelectionForm.NumberOfChances;
+            int totalRows = numberOfGuessRows + 1; // +1 for the secret row
+
+            int calculatedHeight =
+                k_InitialTopMargin +
+                k_RowHeight + // secret row
+                k_ExtraSpacingAfterSecret +
+                (numberOfGuessRows * (k_RowHeight + k_RowSpacing)) +
+                k_BottomMargin;
+
+            this.ClientSize = new Size(285, calculatedHeight);
+
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(378, 603);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
             this.MaximizeBox = false;
             this.Name = "BoolPgia";
