@@ -14,29 +14,32 @@ namespace BullsEyeUI
         private readonly Button[] m_ColorButtons = new Button[k_NumOfButtons];
         private readonly Button[] m_ResultButtons = new Button[k_NumOfButtons];
         private readonly Button m_SubmitButton = new Button();
-
         private readonly List<Control> m_AllControls = new List<Control>();
 
         public event EventHandler<Color[]> GuessSubmitted;
 
         public IEnumerable<Control> Controls => m_AllControls;
 
-        public GuessRow(Point i_StartLocation)
+        public GuessRow(Point i_StartLocation, Color i_DefaultColor)
         {
-            createRow(i_StartLocation);
+            createRow(i_StartLocation, i_DefaultColor);
         }
 
-        private void createRow(Point i_StartLocation)
+        private void createRow(Point i_StartLocation, Color i_DefaultColor)
         {
             int x = i_StartLocation.X;
             int y = i_StartLocation.Y;
+
+            Color initialDisplayColor = i_DefaultColor == Color.White
+                ? Color.FromArgb(240, 240, 240)
+                : i_DefaultColor;
 
             for (int i = 0; i < k_NumOfButtons; i++)
             {
                 Button colorButton = new Button();
                 colorButton.Width = k_ButtonSize;
                 colorButton.Height = k_ButtonSize;
-                colorButton.BackColor = Color.Black;
+                colorButton.BackColor = initialDisplayColor;
                 colorButton.Location = new Point(x, y);
                 colorButton.Click += colorButton_Click;
 
@@ -107,7 +110,7 @@ namespace BullsEyeUI
         {
             foreach (Button button in m_ColorButtons)
             {
-                if (button.BackColor == Color.Black)
+                if (button.BackColor.ToArgb() == Color.FromArgb(240, 240, 240).ToArgb())
                 {
                     return false;
                 }
@@ -127,7 +130,6 @@ namespace BullsEyeUI
             }
 
             m_SubmitButton.Enabled = false;
-
             OnGuessSubmitted(selectedColors);
         }
 
@@ -155,7 +157,8 @@ namespace BullsEyeUI
         {
             foreach (Button button in m_ColorButtons)
             {
-                button.Enabled = i_IsEnabled && button.BackColor == Color.Black;
+                bool isUnchosen = button.BackColor.ToArgb() == Color.FromArgb(240, 240, 240).ToArgb();
+                button.Enabled = i_IsEnabled && isUnchosen;
             }
 
             m_SubmitButton.Enabled = i_IsEnabled && isAllColored();

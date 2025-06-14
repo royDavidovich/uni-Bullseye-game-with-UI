@@ -6,170 +6,170 @@ using Logic;
 
 namespace BullsEyeUI
 {
-    public class FormMain : Form
+    public class MainForm : Form
     {
         private const int k_ButtonSize = 30;
-        private const int k_GuessRowsSpacing = 50;
+        private const int k_ResultSize = 15;
+        private const int k_Spacing = 10;
+        private const int k_RowHeight = 50;
+        private const int k_StartX = 20;
+        private const int k_StartY = 60;
 
-        private readonly Button m_NumOfGuessesButton = new Button();
-        private readonly Button m_StartButton = new Button();
         private readonly List<GuessRow> m_GuessRows = new List<GuessRow>();
-
-        private int m_NumOfGuesses = 4;
+        private readonly Button[] m_SecretButtons = new Button[4];
+        private GameData m_GameData;
         private int m_CurrentRowIndex = 0;
 
-        private GameData m_GameData;
-
-        public FormMain()
+        public MainForm(int i_NumOfRounds)
         {
             initializeForm();
-            initializeTopButtons();
+            startGame(i_NumOfRounds);
         }
 
         private void initializeForm()
         {
-            this.Text = "BullsEye Game";
-            this.StartPosition = FormStartPosition.CenterScreen;
-            this.Size = new Size(600, 600);
+            this.Text = "Bool Pgia";
             this.FormBorderStyle = FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
+            this.StartPosition = FormStartPosition.CenterScreen;
         }
 
-        private void initializeTopButtons()
+        private void startGame(int i_NumOfRounds)
         {
-            m_NumOfGuessesButton.Text = m_NumOfGuesses.ToString();
-            m_NumOfGuessesButton.Size = new Size(k_ButtonSize * 2, k_ButtonSize);
-            m_NumOfGuessesButton.Location = new Point(20, 20);
-            m_NumOfGuessesButton.Click += numOfGuessesButton_Click;
-            this.Controls.Add(m_NumOfGuessesButton);
-
-            m_StartButton.Text = "Start";
-            m_StartButton.Size = new Size(k_ButtonSize * 2, k_ButtonSize);
-            m_StartButton.Location = new Point(80, 20);
-            m_StartButton.Click += startButton_Click;
-            this.Controls.Add(m_StartButton);
-        }
-
-        private void numOfGuessesButton_Click(object sender, EventArgs e)
-        {
-            m_NumOfGuesses = m_NumOfGuesses == 10 ? 4 : m_NumOfGuesses + 1;
-            m_NumOfGuessesButton.Text = m_NumOfGuesses.ToString();
-        }
-
-        private void startButton_Click(object sender, EventArgs e)
-        {
-            this.Controls.Clear();
+            m_GameData = new GameData(generateSecretWord(), i_NumOfRounds);
             m_GuessRows.Clear();
             m_CurrentRowIndex = 0;
 
-            initializeTopButtons();
+            addSecretRow();
 
-            string secretAsString = SecretWordGenerator.GenerateSecretWord();
-            List<Guess.eGuessCollectionOptions> secretList = new List<Guess.eGuessCollectionOptions>();
-
-            foreach (char letter in secretAsString)
+            for (int i = 0; i < i_NumOfRounds; i++)
             {
-                secretList.Add((Guess.eGuessCollectionOptions)Enum.Parse(typeof(Guess.eGuessCollectionOptions), letter.ToString()));
-            }
+                Point rowLocation = new Point(k_StartX, k_StartY + i * k_RowHeight);
+                GuessRow row = new GuessRow(rowLocation, Color.White);
+                row.GuessSubmitted += guessRow_GuessSubmitted;
+                row.SetEnabled(i == 0);
 
-            Guess secretGuess = new Guess(secretList);
-            m_GameData = new GameData(secretGuess, m_NumOfGuesses);
-
-            for (int i = 0; i < m_NumOfGuesses; i++)
-            {
-                GuessRow guessRow = new GuessRow(new Point(20, 80 + i * k_GuessRowsSpacing));
-                guessRow.GuessSubmitted += guessRow_GuessSubmitted;
-
-                foreach (Control ctrl in guessRow.Controls)
+                foreach (Control control in row.Controls)
                 {
-                    this.Controls.Add(ctrl);
+                    this.Controls.Add(control);
                 }
 
-                guessRow.SetEnabled(i == 0);
-                m_GuessRows.Add(guessRow);
+                m_GuessRows.Add(row);
+            }
+
+            int formWidth = k_StartX + (k_ButtonSize + k_Spacing) * 4 + k_Spacing + k_ButtonSize + k_Spacing + (k_ResultSize + 5) * 4;
+            int formHeight = k_StartY + (i_NumOfRounds * k_RowHeight) + 10;
+
+            this.ClientSize = new Size(formWidth, formHeight);
+        }
+
+        private void addSecretRow()
+        {
+            int x = k_StartX;
+            int y = k_StartY - k_RowHeight;
+
+            for (int i = 0; i < 4; i++)
+            {
+                Button secretButton = new Button();
+                secretButton.Size = new Size(k_ButtonSize, k_ButtonSize);
+                secretButton.BackColor = Color.Black;
+                secretButton.Enabled = false;
+                secretButton.Location = new Point(x, y);
+                m_SecretButtons[i] = secretButton;
+
+                this.Controls.Add(secretButton);
+                x += k_ButtonSize + k_Spacing;
             }
         }
 
         private void guessRow_GuessSubmitted(object sender, Color[] i_SelectedColors)
         {
-            GuessRow currentRow = sender as GuessRow;
+            Guess userGuess = convertColorsToGuess(i_SelectedColors);
+            FeedbackOfGuess feedback = GuessComparer.Compare(userGuess, m_GameData.SecretWord);
+            m_GameData.AddGuessAndFeedback(userGuess, feedback);
 
-            Guess currentGuess = convertColorsToGuess(i_SelectedColors);
-            FeedbackOfGuess feedback = GuessComparer.Compare(currentGuess, m_GameData.SecretWord);
+            GuessRow currentRow = m_GuessRows[m_CurrentRowIndex];
+            int hits = 0;
+            int partials = 0;
 
-            m_GameData.AddGuessAndFeedback(currentGuess, feedback);
-            setResultToRow(currentRow, feedback);
-
-            m_CurrentRowIndex++;
-
-            bool isAllExact = true;
-            foreach (FeedbackOfGuess.eFeedbackOfGuessType type in feedback.m_FeedbackOfGuessTypes)
+            foreach (var type in feedback.m_FeedbackOfGuessTypes)
             {
-                if (type != FeedbackOfGuess.eFeedbackOfGuessType.ExactPlace)
+                if (type == FeedbackOfGuess.eFeedbackOfGuessType.ExactPlace)
                 {
-                    isAllExact = false;
+                    hits++;
+                }
+                else if (type == FeedbackOfGuess.eFeedbackOfGuessType.WrongPlace)
+                {
+                    partials++;
                 }
             }
 
-            if (isAllExact || m_CurrentRowIndex >= m_NumOfGuesses)
+            currentRow.SetResult(hits, partials);
+
+            if (hits == 4 || ++m_CurrentRowIndex == m_GameData.r_MaxUserGuesses)
             {
-                endGame();
+                revealSecret();
+                return;
             }
-            else
+
+            m_GuessRows[m_CurrentRowIndex].SetEnabled(true);
+        }
+
+        private void revealSecret()
+        {
+            Color[] secretColors = convertGuessToColors(m_GameData.SecretWord);
+            for (int i = 0; i < 4; i++)
             {
-                m_GuessRows[m_CurrentRowIndex].SetEnabled(true);
+                m_SecretButtons[i].BackColor = secretColors[i];
             }
+        }
+
+        private Guess generateSecretWord()
+        {
+            string secret = SecretWordGenerator.GenerateSecretWord();
+            List<Guess.eGuessCollectionOptions> letters = new List<Guess.eGuessCollectionOptions>();
+            foreach (char ch in secret)
+            {
+                letters.Add((Guess.eGuessCollectionOptions)Enum.Parse(typeof(Guess.eGuessCollectionOptions), ch.ToString()));
+            }
+
+            return new Guess(letters);
         }
 
         private Guess convertColorsToGuess(Color[] i_Colors)
         {
-            List<Guess.eGuessCollectionOptions> guessList = new List<Guess.eGuessCollectionOptions>();
+            Color[] colorBank = new Color[]
+            {
+                Color.Magenta, Color.Red, Color.Lime, Color.Cyan,
+                Color.Blue, Color.Yellow, Color.Brown, Color.White
+            };
+
+            List<Guess.eGuessCollectionOptions> guess = new List<Guess.eGuessCollectionOptions>();
 
             foreach (Color color in i_Colors)
             {
-                guessList.Add(convertColorToEnum(color));
+                int index = Array.IndexOf(colorBank, color);
+                guess.Add((Guess.eGuessCollectionOptions)index);
             }
 
-            return new Guess(guessList);
+            return new Guess(guess);
         }
 
-        private Guess.eGuessCollectionOptions convertColorToEnum(Color i_Color)
+        private Color[] convertGuessToColors(Guess i_Guess)
         {
-            if (i_Color == Color.Red) return Guess.eGuessCollectionOptions.A;
-            if (i_Color == Color.Green) return Guess.eGuessCollectionOptions.B;
-            if (i_Color == Color.Blue) return Guess.eGuessCollectionOptions.C;
-            if (i_Color == Color.Yellow) return Guess.eGuessCollectionOptions.D;
-            if (i_Color == Color.Purple) return Guess.eGuessCollectionOptions.E;
-            if (i_Color == Color.Orange) return Guess.eGuessCollectionOptions.F;
-            if (i_Color == Color.Brown) return Guess.eGuessCollectionOptions.G;
-            if (i_Color == Color.Pink) return Guess.eGuessCollectionOptions.H;
-
-            throw new ArgumentException("Unsupported color");
-        }
-
-        private void setResultToRow(GuessRow i_Row, FeedbackOfGuess i_Feedback)
-        {
-            int exact = 0;
-            int partial = 0;
-
-            foreach (FeedbackOfGuess.eFeedbackOfGuessType feedbackType in i_Feedback.m_FeedbackOfGuessTypes)
+            Color[] colorBank = new Color[]
             {
-                if (feedbackType == FeedbackOfGuess.eFeedbackOfGuessType.ExactPlace)
-                {
-                    exact++;
-                }
-                else if (feedbackType == FeedbackOfGuess.eFeedbackOfGuessType.WrongPlace)
-                {
-                    partial++;
-                }
+                Color.Magenta, Color.Red, Color.Lime, Color.Cyan,
+                Color.Blue, Color.Yellow, Color.Brown, Color.White
+            };
+
+            Color[] result = new Color[i_Guess.userGuess.Count];
+            for (int i = 0; i < i_Guess.userGuess.Count; i++)
+            {
+                result[i] = colorBank[(int)i_Guess.userGuess[i]];
             }
 
-            i_Row.SetResult(exact, partial);
-        }
-
-        private void endGame()
-        {
-            MessageBox.Show("Game Over!", "Result", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            return result;
         }
     }
 }

@@ -8,17 +8,17 @@ namespace BullsEyeUI
     {
         private readonly Color[] r_Colors = new Color[]
         {
+            Color.Magenta,
             Color.Red,
-            Color.Green,
+            Color.Lime,
+            Color.Cyan,
             Color.Blue,
             Color.Yellow,
-            Color.Purple,
-            Color.Orange,
             Color.Brown,
-            Color.Pink
+            Color.White
         };
 
-        private const int k_ButtonSize = 40;
+        private const int k_ButtonSize = 50;
         private const int k_Padding = 10;
 
         public Color SelectedColor { get; private set; }
@@ -30,33 +30,42 @@ namespace BullsEyeUI
 
         private void initializeForm()
         {
-            this.Text = "Pick a color";
+            this.Text = "Pick A Color:";
             this.FormBorderStyle = FormBorderStyle.FixedDialog;
             this.StartPosition = FormStartPosition.CenterParent;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.Size = new Size((k_ButtonSize + k_Padding) * r_Colors.Length + k_Padding, k_ButtonSize + 2 * k_Padding);
+            this.BackColor = SystemColors.Control;
+            this.ClientSize = new Size((k_ButtonSize + k_Padding) * 4 + k_Padding, (k_ButtonSize + k_Padding) * 2 + k_Padding);
 
             int x = k_Padding;
+            int y = k_Padding;
 
-            foreach (Color color in r_Colors)
+            for (int i = 0; i < r_Colors.Length; i++)
             {
                 Button colorButton = new Button();
                 colorButton.Size = new Size(k_ButtonSize, k_ButtonSize);
-                colorButton.BackColor = color;
-                colorButton.Location = new Point(x, k_Padding);
+                colorButton.BackColor = r_Colors[i];
+                colorButton.FlatStyle = FlatStyle.Flat;
+                colorButton.FlatAppearance.BorderColor = Color.Black;
+                colorButton.Location = new Point(x, y);
                 colorButton.Click += colorButton_Click;
 
                 this.Controls.Add(colorButton);
 
                 x += k_ButtonSize + k_Padding;
+
+                if ((i + 1) % 4 == 0)
+                {
+                    x = k_Padding;
+                    y += k_ButtonSize + k_Padding;
+                }
             }
         }
 
         private void colorButton_Click(object sender, EventArgs e)
         {
             Button clickedButton = sender as Button;
-
             this.SelectedColor = clickedButton.BackColor;
             this.DialogResult = DialogResult.OK;
             this.Close();
