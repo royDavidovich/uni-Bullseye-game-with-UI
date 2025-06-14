@@ -1,4 +1,4 @@
-﻿namespace Ex02
+﻿namespace Logic
 {
     public struct FeedbackOfGuess
     {

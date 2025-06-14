@@ -1,11 +1,11 @@
-﻿namespace Ex02
+﻿namespace Logic
 {
     public struct RowOfGuesses
     {
-        public GuessHandler UserGuess { get; }
+        public Guess UserGuess { get; }
         public FeedbackOfGuess Feedback { get; }
 
-        public RowOfGuesses(GuessHandler i_UserGuess, FeedbackOfGuess i_Feedback)
+        public RowOfGuesses(Guess i_UserGuess, FeedbackOfGuess i_Feedback)
         {
             UserGuess = i_UserGuess;
             Feedback = i_Feedback;
