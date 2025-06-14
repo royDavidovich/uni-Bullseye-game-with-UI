@@ -1,15 +1,19 @@
-﻿namespace Ex05.Logic
+﻿using System.Collections.Generic;
+
+namespace Ex05.Logic
 {
     public class GameData
     {   
         public readonly int r_MaxUserGuesses;
         public int RemainingNumberOfGuesses { get; set; }
-        public GuessCombination GuessCombination { get; set; }
+
+        public GuessCombination SecretWordCombination { get; private set; }
+        public GuessCombination UserGuessCombination { get; set; }
         public GuessesHistory GuessesHistory { get; set; }
 
-        public GameData(string i_SecretWord, int i_MaxUserGuesses) 
+        public GameData(int i_MaxUserGuesses)
         {
-            GuessCombination = new GuessCombination();
+            SecretWordCombination = SecretWordGenerator.GenerateSecretWord();
             GuessesHistory = new GuessesHistory();
             r_MaxUserGuesses = i_MaxUserGuesses;
             RemainingNumberOfGuesses = i_MaxUserGuesses;

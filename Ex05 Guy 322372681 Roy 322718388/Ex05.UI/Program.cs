@@ -11,7 +11,8 @@ namespace Ex05.UI
     {
         public static void Main()
         {
-            Console.WriteLine("Hello World");
+            BoolPgia boolPgia = new BoolPgia();
+            boolPgia.ShowDialog();
         }
     }
 }
