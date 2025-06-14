@@ -1,23 +1,23 @@
-﻿namespace Ex02
+﻿namespace Ex05.Logic
 {
     public class GameData
     {   
         public readonly int r_MaxUserGuesses;
         public int RemainingNumberOfGuesses { get; set; }
-        public GuessHandler SecretWord { get; set; }
-        public HistoryOfGuesses HistoryOfGuesses { get; set; }
+        public GuessCombination GuessCombination { get; set; }
+        public GuessesHistory GuessesHistory { get; set; }
 
         public GameData(string i_SecretWord, int i_MaxUserGuesses) 
         {
-            SecretWord = new GuessHandler();
-            HistoryOfGuesses = new HistoryOfGuesses();
+            GuessCombination = new GuessCombination();
+            GuessesHistory = new GuessesHistory();
             r_MaxUserGuesses = i_MaxUserGuesses;
             RemainingNumberOfGuesses = i_MaxUserGuesses;
         }
 
-        public void AddGuessAndFeedback(GuessHandler i_Guess, FeedbackOfGuess i_Feedback)
+        public void AddGuessAndFeedback(GuessCombination i_GuessCombination, GuessFeedback i_GuessFeedback)
         {
-            HistoryOfGuesses.AddNewRow(i_Guess, i_Feedback);
+            GuessesHistory.AddGuessAttempt(i_GuessCombination, i_GuessFeedback);
         }
     }
 }

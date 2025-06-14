@@ -1,11 +1,11 @@
-﻿namespace Ex02
+﻿namespace Ex05.Logic
 {
-    public struct FeedbackOfGuess
+    public struct GuessFeedback
     {
         public enum eFeedbackOfGuessType { ExactPlace, WrongPlace, NotInGuess }
         public eFeedbackOfGuessType[] m_FeedbackOfGuessTypes;
 
-        public FeedbackOfGuess(eFeedbackOfGuessType[] i_FeedbackOfGuessTypes)
+        public GuessFeedback(eFeedbackOfGuessType[] i_FeedbackOfGuessTypes)
         {
             m_FeedbackOfGuessTypes = i_FeedbackOfGuessTypes;
         }

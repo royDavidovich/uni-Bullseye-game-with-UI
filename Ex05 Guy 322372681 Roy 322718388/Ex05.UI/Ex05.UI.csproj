@@ -38,5 +38,11 @@
   <ItemGroup>
     <Compile Include="Program.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Ex05.Logic\Ex05.Logic.csproj">
+      <Project>{7db069c1-6745-4bd6-b367-a60d45913da4}</Project>
+      <Name>Ex05.Logic</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
