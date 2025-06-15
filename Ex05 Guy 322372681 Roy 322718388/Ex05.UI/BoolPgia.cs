@@ -20,27 +20,10 @@ namespace Ex05.UI
         public BoolPgia(ChancesSelectionForm i_ChancesSelectionForm)
         {
             r_ChancesSelectionForm = i_ChancesSelectionForm;
-            if (ensureMaxChancesChosen())
-            {
-                m_NewGameData = new GameData(r_ChancesSelectionForm.NumberOfChances);
-                InitializeComponent();
-                addGuessRows(r_ChancesSelectionForm.NumberOfChances);
-            }
-        }
+            m_NewGameData = new GameData(r_ChancesSelectionForm.NumberOfChances);
+            InitializeComponent();
+            addGuessRows(r_ChancesSelectionForm.NumberOfChances);
 
-        private bool m_IsMaxChancesChosen = false;
-
-        private bool ensureMaxChancesChosen()
-        {
-            if(!m_IsMaxChancesChosen)
-            {
-                if (r_ChancesSelectionForm.ClosedByStart)
-                {
-                    m_IsMaxChancesChosen = true;
-                }
-            }
-
-            return m_IsMaxChancesChosen;
         }
 
         private void addGuessRows(int i_NumberOfChances)
