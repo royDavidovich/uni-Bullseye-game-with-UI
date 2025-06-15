@@ -14,13 +14,15 @@ namespace Ex05.UI
     public partial class BoolPgia : Form
     {
         private readonly ChancesSelectionForm r_ChancesSelectionForm = new ChancesSelectionForm();
+        private readonly GameData m_NewGameData;
+        private GuessRow m_SecretRow;
 
         public BoolPgia()
         {
             r_ChancesSelectionForm.ShowDialog();
             if (ensureMaxChancesChosen())
             {
-                Ex05.Logic.GameData newGame = new GameData(r_ChancesSelectionForm.NumberOfChances);
+                m_NewGameData = new GameData(r_ChancesSelectionForm.NumberOfChances);
                 InitializeComponent();
                 addGuessRows(r_ChancesSelectionForm.NumberOfChances);
             }
@@ -47,10 +49,10 @@ namespace Ex05.UI
             const int k_SecretRowTop = 10;
             const int k_ExtraSpaceAfterSecretRow = 10;
 
-            GuessRow secretRow = new GuessRow(0);
-            secretRow.Left = 10;
-            secretRow.Top = k_SecretRowTop;
-            this.Controls.Add(secretRow);
+            m_SecretRow = new GuessRow(0);
+            m_SecretRow.Left = 10;
+            m_SecretRow.Top = k_SecretRowTop;
+            this.Controls.Add(m_SecretRow);
 
             for (int i = 0; i < i_NumberOfChances; i++)
             {
@@ -65,21 +67,85 @@ namespace Ex05.UI
                     guessRow.Enabled = false;
                 }
 
-                guessRow.RowSubmitted += handleRowSubmitted;
+                guessRow.RowSubmitted += onRowSubmission;
             }
+        }
+
+        private void onRowSubmission(GuessRow i_SubmittedRow)
+        {
+            handleRowSubmitted(i_SubmittedRow);
         }
 
         private void handleRowSubmitted(GuessRow i_SubmittedRow)
         {
-            int index = this.Controls.GetChildIndex(i_SubmittedRow);
+            GuessCombination userGuess = i_SubmittedRow.GetUserGuessCombination();
 
-            if (index + 1 < this.Controls.Count)
+            GuessFeedback feedback = FeedbackGenerator.CreateFeedback(userGuess, m_NewGameData.SecretWordCombination);
+            m_NewGameData.AddGuessAndFeedback(userGuess, feedback);
+
+            // Count feedback types
+            int exact = feedback.m_FeedbackOfGuessTypes.Count(f => f == GuessFeedback.eFeedbackOfGuessType.ExactPlace);
+            int partial = feedback.m_FeedbackOfGuessTypes.Count(f => f == GuessFeedback.eFeedbackOfGuessType.WrongPlace);
+
+            i_SubmittedRow.SetFeedback(exact, partial);
+            m_NewGameData.RemainingNumberOfGuesses--;
+
+            if (exact == SecretWordGenerator.k_SecretWordLength)
             {
-                Control nextRow = this.Controls[index + 1];
+                m_NewGameData.IsVictory = true;
+            }
 
-                if (nextRow is GuessRow)
+            if (m_NewGameData.IsVictory)
+            {
+                endGame(true);
+            }
+            else if (m_NewGameData.RemainingNumberOfGuesses <= 0)
+            {
+                endGame(false);
+            }
+            else
+            {
+                enableNextGuessRowAfter(i_SubmittedRow);
+            }
+        }
+
+        private void enableNextGuessRowAfter(GuessRow i_CurrentRow)
+        {
+            bool found = false;
+
+            foreach (Control control in this.Controls)
+            {
+                if (control is GuessRow currentRow)
                 {
-                    nextRow.Enabled = true;
+                    if (found)
+                    {
+                        currentRow.Enabled = true;
+                        return;
+                    }
+
+                    if (currentRow == i_CurrentRow)
+                    {
+                        found = true;
+                    }
+                }
+            }
+        }
+
+        private void endGame(bool i_UserWon)
+        {
+            // Reveal the secret word
+            m_SecretRow.SetColorsFromGuess(m_NewGameData.SecretWordCombination);
+
+            string message = i_UserWon ? "Congratulations! You guessed the word!" : "No more guesses left. You lost!";
+
+            MessageBox.Show(message, "Game Over", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+            // Disable remaining rows
+            foreach (Control control in this.Controls)
+            {
+                if (control is GuessRow row)
+                {
+                    row.Enabled = false;
                 }
             }
         }

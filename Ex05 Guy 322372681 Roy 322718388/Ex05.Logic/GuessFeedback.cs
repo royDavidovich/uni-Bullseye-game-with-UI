@@ -1,6 +1,8 @@
-﻿namespace Ex05.Logic
+﻿using System.Diagnostics.Eventing.Reader;
+
+namespace Ex05.Logic
 {
-    public struct GuessFeedback
+    public class GuessFeedback
     {
         public enum eFeedbackOfGuessType { ExactPlace, WrongPlace, NotInGuess }
         public eFeedbackOfGuessType[] m_FeedbackOfGuessTypes;

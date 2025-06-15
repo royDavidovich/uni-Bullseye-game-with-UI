@@ -40,6 +40,7 @@
     <None Include="bin\Debug\Ex05.Logic.dll.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FeedbackGenerator.cs" />
     <Compile Include="GuessFeedback.cs" />
     <Compile Include="GameData.cs" />
     <Compile Include="GuessCombination.cs" />

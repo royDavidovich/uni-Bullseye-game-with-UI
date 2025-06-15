@@ -5,6 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Ex05.Logic;
+using static Ex05.Logic.GuessCombination;
 
 namespace Ex05.UI
 {
@@ -14,6 +16,31 @@ namespace Ex05.UI
         private Button[] m_ButtonsGuess = new Button[k_NumOfButtonsInRow];
         private Button m_ButtonSubmit = new Button();
         private Button[] m_FeedbackIndicators = new Button[k_NumOfButtonsInRow];
+        private static readonly Dictionary<Color, eGuessCollectionOptions> sr_ColorToOptionMap =
+            new Dictionary<Color, eGuessCollectionOptions>
+                {
+                    { Color.Red, eGuessCollectionOptions.A },
+                    { Color.Blue, eGuessCollectionOptions.B },
+                    { Color.Green, eGuessCollectionOptions.C },
+                    { Color.Yellow, eGuessCollectionOptions.D },
+                    { Color.Orange, eGuessCollectionOptions.E },
+                    { Color.Purple, eGuessCollectionOptions.F },
+                    { Color.Brown, eGuessCollectionOptions.G },
+                    { Color.Pink, eGuessCollectionOptions.H }
+                };
+        private static readonly Dictionary<eGuessCollectionOptions, Color> sr_OptionToColorMap =
+            new Dictionary<eGuessCollectionOptions, Color>
+                {
+                    { eGuessCollectionOptions.A, Color.Red },
+                    { eGuessCollectionOptions.B, Color.Blue },
+                    { eGuessCollectionOptions.C, Color.Green },
+                    { eGuessCollectionOptions.D, Color.Yellow },
+                    { eGuessCollectionOptions.E, Color.Orange },
+                    { eGuessCollectionOptions.F, Color.Purple },
+                    { eGuessCollectionOptions.G, Color.Brown },
+                    { eGuessCollectionOptions.H, Color.Pink }
+                };
+
 
         public event Action<GuessRow> RowSubmitted;
 
@@ -120,6 +147,64 @@ namespace Ex05.UI
             }
 
             RowSubmitted?.Invoke(this);
+        }
+
+        public List<Color> GetGuessColors()
+        {
+            List<Color> guessColors = new List<Color>();
+
+            foreach (Button button in m_ButtonsGuess)
+            {
+                guessColors.Add(button.BackColor);
+            }
+
+            return guessColors;
+        }
+
+        public GuessCombination GetUserGuessCombination()
+        {
+            List<GuessCombination.eGuessCollectionOptions> userGuess = new List<GuessCombination.eGuessCollectionOptions>();
+
+            foreach (Button button in m_ButtonsGuess)
+            {
+                userGuess.Add(sr_ColorToOptionMap[button.BackColor]);
+            }
+
+            return new GuessCombination(userGuess);
+        }
+
+        public void SetColorsFromGuess(GuessCombination i_Combination)
+        {
+            for (int i = 0; i < m_ButtonsGuess.Length; i++)
+            {
+                GuessCombination.eGuessCollectionOptions option = i_Combination.UserGuess[i];
+                m_ButtonsGuess[i].BackColor = sr_OptionToColorMap[option];
+            }
+        }
+
+        public void SetFeedback(int i_ExactMatches, int i_PartialMatches)
+        {
+            int feedbackIndex = 0;
+
+            // First set exact matches (black)
+            for (int i = 0; i < i_ExactMatches && feedbackIndex < m_FeedbackIndicators.Length; i++)
+            {
+                m_FeedbackIndicators[feedbackIndex].BackColor = Color.Black;
+                feedbackIndex++;
+            }
+
+            // Then set partial matches (yellow)
+            for (int i = 0; i < i_PartialMatches && feedbackIndex < m_FeedbackIndicators.Length; i++)
+            {
+                m_FeedbackIndicators[feedbackIndex].BackColor = Color.Yellow;
+                feedbackIndex++;
+            }
+
+            // The rest stays default (gray or control color)
+            for (; feedbackIndex < m_FeedbackIndicators.Length; feedbackIndex++)
+            {
+                m_FeedbackIndicators[feedbackIndex].BackColor = SystemColors.Control;
+            }
         }
     }
 }

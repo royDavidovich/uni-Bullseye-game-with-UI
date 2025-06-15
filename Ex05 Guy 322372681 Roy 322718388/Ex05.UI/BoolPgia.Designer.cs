@@ -57,7 +57,7 @@ namespace Ex05.UI
             this.Name = "BoolPgia";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "BoolPgia";
-            this.TopMost = true;
+            this.TopMost = false;
             this.Load += new System.EventHandler(this.BoolPgia_Load);
             this.ResumeLayout(false);
 

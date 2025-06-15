@@ -9,6 +9,7 @@ namespace Ex05.Logic
         public GuessCombination SecretWordCombination { get; private set; }
         public GuessCombination UserGuessCombination { get; set; }
         public GuessesHistory GuessesHistory { get; set; }
+        public bool IsVictory { get; set; } = false;
 
         public GameData(int i_MaxUserGuesses)
         {
@@ -22,5 +23,21 @@ namespace Ex05.Logic
         {
             GuessesHistory.AddGuessAttempt(i_GuessCombination, i_GuessFeedback);
         }
+
+        //public GuessFeedback SubmitGuess(GuessCombination i_UserGuess)
+        //{
+        //    GuessFeedback feedback = FeedbackGenerator.CreateFeedback(i_UserGuess, SecretWordCombination);
+
+        //    AddGuessAndFeedback(i_UserGuess, feedback);
+        //    RemainingNumberOfGuesses--;
+
+        //    if (feedback.ExactMatches == SecretWordCombination.UserGuess.Count)
+        //    {
+        //        IsVictory = true;
+        //    }
+
+        //    return feedback;
+        //}
+
     }
 }
