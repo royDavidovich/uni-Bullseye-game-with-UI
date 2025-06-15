@@ -49,7 +49,7 @@ namespace Ex05.UI
             const int k_RowHeight = 50;
             bool isSecretRow = i_RowIndex == 0;
             this.Height = k_RowHeight;
-            this.Width = 350;
+            this.Width = 285;
 
             for(int i = 0; i < k_NumOfButtonsInRow; i++)
             {

@@ -1,18 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Ex05.UI
+﻿namespace Ex05.UI
 {
     public class Program
     {
         public static void Main()
         {
-            BoolPgia boolPgia = new BoolPgia();
-            boolPgia.ShowDialog();
+            ChancesSelectionForm chancesSelectionForm = new ChancesSelectionForm();
+            
+            chancesSelectionForm.ShowDialog();
+            if (chancesSelectionForm.ClosedByStart)
+            {
+                BoolPgia boolPgia = new BoolPgia(chancesSelectionForm);
+                
+                boolPgia.ShowDialog();
+            }
         }
     }
 }

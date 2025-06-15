@@ -17,9 +17,9 @@ namespace Ex05.UI
         private readonly GameData m_NewGameData;
         private GuessRow m_SecretRow;
 
-        public BoolPgia()
+        public BoolPgia(ChancesSelectionForm i_ChancesSelectionForm)
         {
-            r_ChancesSelectionForm.ShowDialog();
+            r_ChancesSelectionForm = i_ChancesSelectionForm;
             if (ensureMaxChancesChosen())
             {
                 m_NewGameData = new GameData(r_ChancesSelectionForm.NumberOfChances);
