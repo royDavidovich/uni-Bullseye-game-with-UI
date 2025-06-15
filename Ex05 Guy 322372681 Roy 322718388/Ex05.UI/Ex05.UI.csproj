@@ -51,6 +51,12 @@
     <Compile Include="ChancesSelectionForm.Designer.cs">
       <DependentUpon>ChancesSelectionForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormColorPicker.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormColorPicker.Designer.cs">
+      <DependentUpon>FormColorPicker.cs</DependentUpon>
+    </Compile>
     <Compile Include="GuessRow.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -75,6 +81,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ChancesSelectionForm.resx">
       <DependentUpon>ChancesSelectionForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormColorPicker.resx">
+      <DependentUpon>FormColorPicker.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

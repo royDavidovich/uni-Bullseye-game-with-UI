@@ -75,22 +75,50 @@ namespace Ex05.UI
 
         private void buttonGuess_Click(object sender, EventArgs e)
         {
-            // TODO: open color picker, set button color, disable duplicate colors
-            // After setting colors, check if all buttons are selected, then:
-            if (isAllButtonsColored())
+            Button buttonClicked = sender as Button;
+
+            Color[] usedColors = m_ButtonsGuess.Where(btn => btn != buttonClicked).Select(btn => btn.BackColor)
+                .Where(color => color != Color.Black).ToArray();
+
+            FormColorPicker formColorPicker = new FormColorPicker(usedColors);
+            formColorPicker.StartPosition = FormStartPosition.Manual;
+
+            Point buttonScreenLocation = buttonClicked.PointToScreen(Point.Empty);
+            formColorPicker.StartPosition = FormStartPosition.Manual;
+            formColorPicker.Location = new Point(buttonScreenLocation.X - formColorPicker.Width + 1, buttonScreenLocation.Y + 30);
+
+            if (formColorPicker.ShowDialog() == DialogResult.OK && formColorPicker.SelectedColor.HasValue)
             {
-                m_ButtonSubmit.Enabled = true;
+                buttonClicked.BackColor = formColorPicker.SelectedColor.Value;
+
+                if (isAllButtonsColored())
+                {
+                    m_ButtonSubmit.Enabled = true;
+                }
             }
         }
 
         private bool isAllButtonsColored()
         {
-            return m_ButtonsGuess.All(i_Btn => i_Btn.BackColor != Color.Black);
+            return m_ButtonsGuess.All(i_Btn => i_Btn.BackColor != SystemColors.Control);
         }
 
         private void buttonSubmit_Click(object sender, EventArgs e)
         {
+            if (!isAllButtonsColored())
+            {
+                MessageBox.Show("Please select a color for each button before submitting.", "Incomplete Guess", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
             m_ButtonSubmit.Enabled = false;
+
+            // Disable guess buttons after submission
+            foreach (Button buttonGuess in m_ButtonsGuess)
+            {
+                buttonGuess.Enabled = false;
+            }
+
             RowSubmitted?.Invoke(this);
         }
     }
