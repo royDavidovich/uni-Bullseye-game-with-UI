@@ -23,21 +23,5 @@ namespace Ex05.Logic
         {
             GuessesHistory.AddGuessAttempt(i_GuessCombination, i_GuessFeedback);
         }
-
-        //public GuessFeedback SubmitGuess(GuessCombination i_UserGuess)
-        //{
-        //    GuessFeedback feedback = FeedbackGenerator.CreateFeedback(i_UserGuess, SecretWordCombination);
-
-        //    AddGuessAndFeedback(i_UserGuess, feedback);
-        //    RemainingNumberOfGuesses--;
-
-        //    if (feedback.ExactMatches == SecretWordCombination.UserGuess.Count)
-        //    {
-        //        IsVictory = true;
-        //    }
-
-        //    return feedback;
-        //}
-
     }
 }

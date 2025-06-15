@@ -37,6 +37,15 @@
   </PropertyGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="bin\Debug\Ex05.Logic.dll.config" />
+    <None Include="bin\Debug\Ex05.UI.exe.config" />
+    <None Include="obj\Debug\DesignTimeResolveAssemblyReferences.cache" />
+    <None Include="obj\Debug\DesignTimeResolveAssemblyReferencesInput.cache" />
+    <None Include="obj\Debug\Ex05.UI.csproj.AssemblyReference.cache" />
+    <None Include="obj\Debug\Ex05.UI.csproj.CoreCompileInputs.cache" />
+    <None Include="obj\Debug\Ex05.UI.csproj.GenerateResource.cache" />
+    <None Include="obj\Debug\Ex05.UI.csproj.Up2Date" />
+    <None Include="obj\Debug\Ex05.UI.exe.config" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BoolPgia.cs">
@@ -60,6 +69,7 @@
     <Compile Include="GuessRow.cs">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="obj\Debug\.NETFramework,Version=v4.8.AssemblyAttributes.cs" />
     <Compile Include="Program.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -86,6 +96,24 @@
     <EmbeddedResource Include="FormColorPicker.resx">
       <DependentUpon>FormColorPicker.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="obj\Debug\Ex05.UI.BoolPgia.resources" />
+    <EmbeddedResource Include="obj\Debug\Ex05.UI.ChancesSelectionForm.resources" />
+    <EmbeddedResource Include="obj\Debug\Ex05.UI.FormColorPicker.resources" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="bin\Debug\Ex05.Logic.dll" />
+    <Content Include="bin\Debug\Ex05.Logic.pdb" />
+    <Content Include="bin\Debug\Ex05.UI.exe" />
+    <Content Include="bin\Debug\Ex05.UI.pdb" />
+    <Content Include="obj\Debug\Ex05.UI.csproj.FileListAbsolute.txt" />
+    <Content Include="obj\Debug\Ex05.UI.exe" />
+    <Content Include="obj\Debug\Ex05.UI.pdb" />
+    <EmbeddedResource Include="Resources\bullseye-emoji-2048x2048-k7bty5ek.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="obj\Debug\TempPE\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

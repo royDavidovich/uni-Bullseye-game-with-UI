@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using Ex05.Logic;
 using static Ex05.Logic.GuessCombination;
@@ -41,24 +39,23 @@ namespace Ex05.UI
                     { eGuessCollectionOptions.H, Color.Pink }
                 };
 
-
         public event Action<GuessRow> RowSubmitted;
 
         public GuessRow(int i_RowIndex)
         {
             const int k_RowHeight = 50;
             bool isSecretRow = i_RowIndex == 0;
+        
             this.Height = k_RowHeight;
             this.Width = 285;
-
             for(int i = 0; i < k_NumOfButtonsInRow; i++)
             {
                 Button buttonGuess = new Button();
+
                 buttonGuess.Width = 40;
                 buttonGuess.Height = 40;
                 buttonGuess.Left = i * 45;
                 buttonGuess.Top = (k_RowHeight - buttonGuess.Height) / 2;
-
                 if(!isSecretRow)
                 {
                     buttonGuess.Click += buttonGuess_Click;
@@ -88,12 +85,12 @@ namespace Ex05.UI
                 for (int i = 0; i < k_NumOfButtonsInRow; i++)
                 {
                     Button panelIndicator = new Button();
+
                     panelIndicator.Width = 15;
                     panelIndicator.Height = 15;
                     panelIndicator.Left = 230 + (i % 2) * 20;
                     panelIndicator.Top = 8 + (i / 2) * 20;
                     panelIndicator.Enabled = false;
-
                     this.Controls.Add(panelIndicator);
                     m_FeedbackIndicators[i] = panelIndicator;
                 }
@@ -103,21 +100,20 @@ namespace Ex05.UI
         private void buttonGuess_Click(object sender, EventArgs e)
         {
             Button buttonClicked = sender as Button;
-
             Color[] usedColors = m_ButtonsGuess.Where(btn => btn != buttonClicked).Select(btn => btn.BackColor)
                 .Where(color => color != Color.Black).ToArray();
-
             FormColorPicker formColorPicker = new FormColorPicker(usedColors);
+            
             formColorPicker.StartPosition = FormStartPosition.Manual;
-
             Point buttonScreenLocation = buttonClicked.PointToScreen(Point.Empty);
-            formColorPicker.StartPosition = FormStartPosition.Manual;
-            formColorPicker.Location = new Point(buttonScreenLocation.X - formColorPicker.Width + 1, buttonScreenLocation.Y + 30);
 
+            formColorPicker.StartPosition = FormStartPosition.Manual;
+            formColorPicker.Location = new Point(
+                buttonScreenLocation.X - formColorPicker.Width + 1,
+                buttonScreenLocation.Y + 30);
             if (formColorPicker.ShowDialog() == DialogResult.OK && formColorPicker.SelectedColor.HasValue)
             {
                 buttonClicked.BackColor = formColorPicker.SelectedColor.Value;
-
                 if (isAllButtonsColored())
                 {
                     m_ButtonSubmit.Enabled = true;
@@ -149,21 +145,10 @@ namespace Ex05.UI
             RowSubmitted?.Invoke(this);
         }
 
-        public List<Color> GetGuessColors()
-        {
-            List<Color> guessColors = new List<Color>();
-
-            foreach (Button button in m_ButtonsGuess)
-            {
-                guessColors.Add(button.BackColor);
-            }
-
-            return guessColors;
-        }
-
         public GuessCombination GetUserGuessCombination()
         {
-            List<GuessCombination.eGuessCollectionOptions> userGuess = new List<GuessCombination.eGuessCollectionOptions>();
+            List<GuessCombination.eGuessCollectionOptions> userGuess =
+                new List<GuessCombination.eGuessCollectionOptions>();
 
             foreach (Button button in m_ButtonsGuess)
             {
@@ -186,24 +171,25 @@ namespace Ex05.UI
         {
             int feedbackIndex = 0;
 
-            // First set exact matches (black)
+            // set exact matches pegs (black)
             for (int i = 0; i < i_ExactMatches && feedbackIndex < m_FeedbackIndicators.Length; i++)
             {
                 m_FeedbackIndicators[feedbackIndex].BackColor = Color.Black;
                 feedbackIndex++;
             }
 
-            // Then set partial matches (yellow)
+            // set partial matches pegs (yellow)
             for (int i = 0; i < i_PartialMatches && feedbackIndex < m_FeedbackIndicators.Length; i++)
             {
                 m_FeedbackIndicators[feedbackIndex].BackColor = Color.Yellow;
                 feedbackIndex++;
             }
 
-            // The rest stays default (gray or control color)
-            for (; feedbackIndex < m_FeedbackIndicators.Length; feedbackIndex++)
+            // The rest
+            while (feedbackIndex < m_FeedbackIndicators.Length)
             {
                 m_FeedbackIndicators[feedbackIndex].BackColor = SystemColors.Control;
+                feedbackIndex++;
             }
         }
     }

@@ -1,6 +1,4 @@
-﻿using System.Diagnostics.Eventing.Reader;
-
-namespace Ex05.Logic
+﻿namespace Ex05.Logic
 {
     public class GuessFeedback
     {

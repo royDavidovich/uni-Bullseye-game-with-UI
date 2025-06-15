@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ChancesSelectionForm));
             this.buttonNumberOfChances = new System.Windows.Forms.Button();
             this.buttonStart = new System.Windows.Forms.Button();
             this.SuspendLayout();
@@ -60,6 +61,7 @@
             this.Controls.Add(this.buttonStart);
             this.Controls.Add(this.buttonNumberOfChances);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "ChancesSelectionForm";
@@ -67,6 +69,7 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Bool Pgia";
             this.TopMost = true;
+            this.Load += new System.EventHandler(this.ChancesSelectionForm_Load);
             this.ResumeLayout(false);
 
         }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.Resources;
 using System.Windows.Forms;
 
 namespace Ex05.UI
@@ -38,10 +39,13 @@ namespace Ex05.UI
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(BoolPgia));
             this.SuspendLayout();
             // 
             // BoolPgia
             // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 
             int numberOfGuessRows = r_ChancesSelectionForm.NumberOfChances;
             int totalRows = numberOfGuessRows + 1; // +1 for the secret row
@@ -51,15 +55,13 @@ namespace Ex05.UI
                                    + k_BottomMargin;
 
             this.ClientSize = new Size(285, calculatedHeight);
-
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "BoolPgia";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "BoolPgia";
-            this.TopMost = false;
             this.ResumeLayout(false);
 
         }
