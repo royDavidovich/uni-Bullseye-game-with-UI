@@ -71,6 +71,7 @@
     </Compile>
     <Compile Include="obj\Debug\.NETFramework,Version=v4.8.AssemblyAttributes.cs" />
     <Compile Include="Program.cs" />
+    <Compile Include="UiToLogicBridge.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Ex05.Logic\Ex05.Logic.csproj">

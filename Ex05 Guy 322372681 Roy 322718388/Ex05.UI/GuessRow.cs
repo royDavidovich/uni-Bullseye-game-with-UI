@@ -14,30 +14,30 @@ namespace Ex05.UI
         private Button[] m_ButtonsGuess = new Button[k_NumOfButtonsInRow];
         private Button m_ButtonSubmit = new Button();
         private Button[] m_FeedbackIndicators = new Button[k_NumOfButtonsInRow];
-        private static readonly Dictionary<Color, eGuessCollectionOptions> sr_ColorToOptionMap =
-            new Dictionary<Color, eGuessCollectionOptions>
-                {
-                    { Color.Red, eGuessCollectionOptions.A },
-                    { Color.Blue, eGuessCollectionOptions.B },
-                    { Color.Green, eGuessCollectionOptions.C },
-                    { Color.Yellow, eGuessCollectionOptions.D },
-                    { Color.Orange, eGuessCollectionOptions.E },
-                    { Color.Purple, eGuessCollectionOptions.F },
-                    { Color.Brown, eGuessCollectionOptions.G },
-                    { Color.Pink, eGuessCollectionOptions.H }
-                };
-        private static readonly Dictionary<eGuessCollectionOptions, Color> sr_OptionToColorMap =
-            new Dictionary<eGuessCollectionOptions, Color>
-                {
-                    { eGuessCollectionOptions.A, Color.Red },
-                    { eGuessCollectionOptions.B, Color.Blue },
-                    { eGuessCollectionOptions.C, Color.Green },
-                    { eGuessCollectionOptions.D, Color.Yellow },
-                    { eGuessCollectionOptions.E, Color.Orange },
-                    { eGuessCollectionOptions.F, Color.Purple },
-                    { eGuessCollectionOptions.G, Color.Brown },
-                    { eGuessCollectionOptions.H, Color.Pink }
-                };
+        //private static readonly Dictionary<Color, eGuessCollectionOptions> sr_ColorToOptionMap =
+        //    new Dictionary<Color, eGuessCollectionOptions>
+        //        {
+        //            { Color.Red, eGuessCollectionOptions.A },
+        //            { Color.Blue, eGuessCollectionOptions.B },
+        //            { Color.Green, eGuessCollectionOptions.C },
+        //            { Color.Yellow, eGuessCollectionOptions.D },
+        //            { Color.Orange, eGuessCollectionOptions.E },
+        //            { Color.Purple, eGuessCollectionOptions.F },
+        //            { Color.Brown, eGuessCollectionOptions.G },
+        //            { Color.Pink, eGuessCollectionOptions.H }
+        //        };
+        //private static readonly Dictionary<eGuessCollectionOptions, Color> sr_OptionToColorMap =
+        //    new Dictionary<eGuessCollectionOptions, Color>
+        //        {
+        //            { eGuessCollectionOptions.A, Color.Red },
+        //            { eGuessCollectionOptions.B, Color.Blue },
+        //            { eGuessCollectionOptions.C, Color.Green },
+        //            { eGuessCollectionOptions.D, Color.Yellow },
+        //            { eGuessCollectionOptions.E, Color.Orange },
+        //            { eGuessCollectionOptions.F, Color.Purple },
+        //            { eGuessCollectionOptions.G, Color.Brown },
+        //            { eGuessCollectionOptions.H, Color.Pink }
+        //        };
 
         public event Action<GuessRow> RowSubmitted;
 
@@ -152,7 +152,7 @@ namespace Ex05.UI
 
             foreach (Button button in m_ButtonsGuess)
             {
-                userGuess.Add(sr_ColorToOptionMap[button.BackColor]);
+                userGuess.Add(UiToLogicBridge.GetFromUiToLogicIndex(button.BackColor));
             }
 
             return new GuessCombination(userGuess);
@@ -163,7 +163,8 @@ namespace Ex05.UI
             for (int i = 0; i < m_ButtonsGuess.Length; i++)
             {
                 GuessCombination.eGuessCollectionOptions option = i_Combination.UserGuess[i];
-                m_ButtonsGuess[i].BackColor = sr_OptionToColorMap[option];
+                //m_ButtonsGuess[i].BackColor = sr_OptionToColorMap[option];
+                m_ButtonsGuess[i].BackColor = UiToLogicBridge.GetFromLogicToUiIndex(option);
             }
         }
 
