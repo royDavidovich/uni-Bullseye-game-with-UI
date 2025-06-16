@@ -61,15 +61,12 @@ namespace Ex05.UI
             m_NewGameData.RemainingNumberOfGuesses--;
             if (exact == SecretWordGenerator.k_SecretWordLength)
             {
-                m_NewGameData.IsVictory = true;
-            }
-
-            if (m_NewGameData.IsVictory)
-            {
+                //Victory
                 endGame(true);
             }
             else if (m_NewGameData.RemainingNumberOfGuesses <= 0)
             {
+                //Lose
                 endGame(false);
             }
             else

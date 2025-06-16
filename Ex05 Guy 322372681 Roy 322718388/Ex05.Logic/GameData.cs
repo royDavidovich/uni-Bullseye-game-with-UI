@@ -7,7 +7,6 @@ namespace Ex05.Logic
         public readonly int r_MaxUserGuesses;
         public int RemainingNumberOfGuesses { get; set; }
         public GuessCombination SecretWordCombination { get; private set; }
-        public bool IsVictory { get; set; } = false;
 
         public GameData(int i_MaxUserGuesses)
         {
