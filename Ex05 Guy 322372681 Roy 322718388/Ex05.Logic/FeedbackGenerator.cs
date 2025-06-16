@@ -17,19 +17,16 @@ namespace Ex05.Logic
             {
                 if(guessList[i] == secretList[i])
                 {
-                    // Exact–place pass
                     feedback.Add(GuessFeedback.eFeedbackOfGuessType.ExactPlace);
                     pegCount++;
                 }
                 else if (secretList.Contains(guessList[i]))
                 {
-                    // Wrong–place pass
                     feedback.Add(GuessFeedback.eFeedbackOfGuessType.WrongPlace);
                     pegCount++;
                 }
             }
 
-            // The rest
             while(SecretWordGenerator.k_SecretWordLength - pegCount > 0)
             {
                 feedback.Add(GuessFeedback.eFeedbackOfGuessType.NotInGuess);

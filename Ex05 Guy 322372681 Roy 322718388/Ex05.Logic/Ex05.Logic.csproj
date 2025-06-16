@@ -44,9 +44,7 @@
     <Compile Include="GuessFeedback.cs" />
     <Compile Include="GameData.cs" />
     <Compile Include="GuessCombination.cs" />
-    <Compile Include="GuessesHistory.cs" />
     <Compile Include="obj\Debug\.NETFramework,Version=v4.8.AssemblyAttributes.cs" />
-    <Compile Include="GuessAttempt.cs" />
     <Compile Include="SecretWordGenerator.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -54,8 +54,6 @@ namespace Ex05.UI
         {
             GuessCombination userGuess = i_SubmittedRow.GetUserGuessCombination();
             GuessFeedback feedback = FeedbackGenerator.CreateFeedback(userGuess, m_NewGameData.SecretWordCombination);
-            
-            m_NewGameData.AddGuessAndFeedback(userGuess, feedback);
             int exact = feedback.m_FeedbackOfGuessTypes.Count(i_FeedbackOfGuessType => i_FeedbackOfGuessType == GuessFeedback.eFeedbackOfGuessType.ExactPlace);
             int partial = feedback.m_FeedbackOfGuessTypes.Count(i_FeedbackOfGuessType => i_FeedbackOfGuessType == GuessFeedback.eFeedbackOfGuessType.WrongPlace);
 
