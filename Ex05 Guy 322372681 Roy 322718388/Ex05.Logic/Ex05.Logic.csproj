@@ -5,7 +5,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{7DB069C1-6745-4BD6-B367-A60D45913DA4}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <OutputType>Library</OutputType>
     <RootNamespace>Ex05.Logic</RootNamespace>
     <AssemblyName>Ex05.Logic</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
@@ -32,8 +32,26 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="bin\Debug\Ex05.Logic.dll.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="FeedbackGenerator.cs" />
+    <Compile Include="GuessFeedback.cs" />
+    <Compile Include="GameData.cs" />
+    <Compile Include="GuessCombination.cs" />
+    <Compile Include="GuessesHistory.cs" />
+    <Compile Include="obj\Debug\.NETFramework,Version=v4.8.AssemblyAttributes.cs" />
+    <Compile Include="GuessAttempt.cs" />
+    <Compile Include="SecretWordGenerator.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="bin\Debug\Ex05.Logic.dll" />
+    <Content Include="bin\Debug\Ex05.Logic.pdb" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

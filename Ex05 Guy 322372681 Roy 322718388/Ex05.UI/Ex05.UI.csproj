@@ -5,7 +5,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{A75BEEB7-E8EB-40E4-829B-206B07EC12D2}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <OutputType>WinExe</OutputType>
     <RootNamespace>Ex05.UI</RootNamespace>
     <AssemblyName>Ex05.UI</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
@@ -32,11 +32,88 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="bin\Debug\Ex05.Logic.dll.config" />
+    <None Include="bin\Debug\Ex05.UI.exe.config" />
+    <None Include="obj\Debug\DesignTimeResolveAssemblyReferences.cache" />
+    <None Include="obj\Debug\DesignTimeResolveAssemblyReferencesInput.cache" />
+    <None Include="obj\Debug\Ex05.UI.csproj.AssemblyReference.cache" />
+    <None Include="obj\Debug\Ex05.UI.csproj.CoreCompileInputs.cache" />
+    <None Include="obj\Debug\Ex05.UI.csproj.GenerateResource.cache" />
+    <None Include="obj\Debug\Ex05.UI.csproj.Up2Date" />
+    <None Include="obj\Debug\Ex05.UI.exe.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BoolPgia.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="BoolPgia.Designer.cs">
+      <DependentUpon>BoolPgia.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ChancesSelectionForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ChancesSelectionForm.Designer.cs">
+      <DependentUpon>ChancesSelectionForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormColorPicker.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormColorPicker.Designer.cs">
+      <DependentUpon>FormColorPicker.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GuessRow.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="obj\Debug\.NETFramework,Version=v4.8.AssemblyAttributes.cs" />
     <Compile Include="Program.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Ex05.Logic\Ex05.Logic.csproj">
+      <Project>{7db069c1-6745-4bd6-b367-a60d45913da4}</Project>
+      <Name>Ex05.Logic</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="BoolPgia.resx">
+      <DependentUpon>BoolPgia.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ChancesSelectionForm.resx">
+      <DependentUpon>ChancesSelectionForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormColorPicker.resx">
+      <DependentUpon>FormColorPicker.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="obj\Debug\Ex05.UI.BoolPgia.resources" />
+    <EmbeddedResource Include="obj\Debug\Ex05.UI.ChancesSelectionForm.resources" />
+    <EmbeddedResource Include="obj\Debug\Ex05.UI.FormColorPicker.resources" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="bin\Debug\Ex05.Logic.dll" />
+    <Content Include="bin\Debug\Ex05.Logic.pdb" />
+    <Content Include="bin\Debug\Ex05.UI.exe" />
+    <Content Include="bin\Debug\Ex05.UI.pdb" />
+    <Content Include="obj\Debug\Ex05.UI.csproj.FileListAbsolute.txt" />
+    <Content Include="obj\Debug\Ex05.UI.exe" />
+    <Content Include="obj\Debug\Ex05.UI.pdb" />
+    <EmbeddedResource Include="Resources\bullseye-emoji-2048x2048-k7bty5ek.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="obj\Debug\TempPE\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

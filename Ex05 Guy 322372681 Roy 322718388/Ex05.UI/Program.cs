@@ -1,13 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Ex05.UI
+﻿namespace Ex05.UI
 {
-    internal class Program
+    public class Program
     {
-
+        public static void Main()
+        {
+            ChancesSelectionForm chancesSelectionForm = new ChancesSelectionForm();
+            
+            chancesSelectionForm.ShowDialog();
+            if (chancesSelectionForm.ClosedByStart)
+            {
+                BoolPgia boolPgia = new BoolPgia(chancesSelectionForm);
+                
+                boolPgia.ShowDialog();
+            }
+        }
     }
 }
