@@ -1,6 +1,6 @@
 # Bullseye – UI Edition
 
-A small university project that implements a **code-breaking “Bulls & Cows / Mastermind-style” game** with a graphical user interface (UI).  
+A small project that implements a **code-breaking “Bulls & Cows / Mastermind-style” game** with a graphical user interface (UI).  
 The player makes guesses and gets feedback each round until they crack the secret code.
 
 ---
